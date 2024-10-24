@@ -100,9 +100,12 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
+    visited = 0
     while fringe:
         node = fringe.pop()
+        visited += 1
         if problem.goal_test(node.state):
+            print(f"Se han visitado {visited} nodos")
             return node
         if node.state not in closed:
             closed[node.state] = True
