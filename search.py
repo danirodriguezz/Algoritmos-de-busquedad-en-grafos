@@ -76,12 +76,17 @@ class Node:
     def __repr__(self):
         return "<Node %s>" % (self.state,)
 
-    def path(self):
+    def path(self, graph):
+        
         """Create a list of nodes from the root to this node."""
-        x, result = self, [self]
+        x, result, total_cost = self, [self], 0
         while x.parent:
             result.append(x.parent)
             x = x.parent
+        # Implementación de el coste total teniendo el vector resultado
+        for i in range(len(result) - 1):
+            total_cost +=  graph.dict[str(result[i])][str(result[i + 1])]
+        print(f"El coste total es {total_cost}")
         return result
 
     def expand(self, problem):
@@ -89,6 +94,9 @@ class Node:
         return [Node(next, self, act,
                      problem.path_cost(self.path_cost, self.state, act, next))
                 for (act, next) in problem.successor(self.state)]
+    
+    def __str__(self):
+        return str(self.state)
 
 
 # ______________________________________________________________________________
@@ -101,10 +109,12 @@ def graph_search(problem, fringe):
     closed = {}
     fringe.append(Node(problem.initial))
     visited = 0
+    totalCost = 0
     generated = 1
     while fringe:
         node = fringe.pop()
         visited += 1
+        # print(node.parent)
         if problem.goal_test(node.state):
             print(f"Se han generado {generated} nodos")
             print(f"Se han visitado {visited} nodos")
@@ -124,6 +134,7 @@ def breadth_first_graph_search(problem):
 def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
+
 
 
 
@@ -182,6 +193,9 @@ class Graph:
     def nodes(self):
         """Return a list of nodes in the graph."""
         return list(self.dict.keys())
+    
+    def __str__(self):
+        return str(self.dict)
 
 
 def UndirectedGraph(dict=None):
