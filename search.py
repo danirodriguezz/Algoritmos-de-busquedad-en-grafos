@@ -101,15 +101,18 @@ def graph_search(problem, fringe):
     closed = {}
     fringe.append(Node(problem.initial))
     visited = 0
+    generated = 1
     while fringe:
         node = fringe.pop()
         visited += 1
         if problem.goal_test(node.state):
+            print(f"Se han generado {generated} nodos")
             print(f"Se han visitado {visited} nodos")
             return node
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
+            generated += len(node.expand(problem))
     return None
 
 

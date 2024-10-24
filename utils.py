@@ -542,7 +542,10 @@ class FIFOQueue(Queue):
             self.A = self.A[self.start:]
             self.start = 0
         return e
-
+    
+    def __str__(self):
+        """Devuelve la representación en cadena de la cola."""
+        return str(self.A[self.start:])
 
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
