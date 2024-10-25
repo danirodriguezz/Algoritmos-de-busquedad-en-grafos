@@ -76,16 +76,12 @@ class Node:
     def __repr__(self):
         return "<Node %s>" % (self.state,)
 
-    def path(self, graph):
+    def path(self):
         """Create a list of nodes from the root to this node."""
-        x, result, total_cost = self, [self], 0
+        x, result = self, [self]
         while x.parent:
             result.append(x.parent)
             x = x.parent
-        # Implementación de el coste total teniendo el vector resultado
-        for i in range(len(result) - 1):
-            total_cost +=  graph.dict[str(result[i])][str(result[i + 1])]
-        print(f"El coste total es {total_cost}")
         return result
 
     def expand(self, problem):
@@ -116,6 +112,7 @@ def graph_search(problem, fringe):
         if problem.goal_test(node.state):
             print(f"Se han generado {generated} nodos")
             print(f"Se han visitado {visited} nodos")
+            print(f"El coste total del camino es {node.path_cost}")
             return node
         if node.state not in closed:
             closed[node.state] = True
