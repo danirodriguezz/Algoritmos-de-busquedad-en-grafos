@@ -1,6 +1,7 @@
 
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
+from queue import PriorityQueue
 
 infinity = 1.0e400
 
@@ -547,6 +548,26 @@ class FIFOQueue(Queue):
         """Devuelve la representación en cadena de la cola."""
         return str(self.A[self.start:])
 
+
+class CustomPriorityQueue:
+    def __init__(self):
+        self.queue = PriorityQueue()
+        self.counter = 0  # Para manejar elementos con prioridad igual
+
+    def append(self, item):
+        cost = item.path_cost 
+        self.queue.put((cost, self.counter, item))
+        self.counter += 1
+
+    def pop(self):
+        return self.queue.get()[2]  # Devuelve solo el nodo
+
+    def extend(self, items):
+        for item in items:
+            self.append(item)
+    
+    def __bool__(self):
+        return not self.queue.empty()
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]

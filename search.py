@@ -77,7 +77,6 @@ class Node:
         return "<Node %s>" % (self.state,)
 
     def path(self, graph):
-        
         """Create a list of nodes from the root to this node."""
         x, result, total_cost = self, [self], 0
         while x.parent:
@@ -114,7 +113,6 @@ def graph_search(problem, fringe):
     while fringe:
         node = fringe.pop()
         visited += 1
-        # print(node.parent)
         if problem.goal_test(node.state):
             print(f"Se han generado {generated} nodos")
             print(f"Se han visitado {visited} nodos")
@@ -136,6 +134,9 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
+def branch_and_bound_search(problem):
+    """Search nodes based on the lowest-cost path in the search tree"""
+    return graph_search(problem, CustomPriorityQueue())
 
 
 # _____________________________________________________________________________
