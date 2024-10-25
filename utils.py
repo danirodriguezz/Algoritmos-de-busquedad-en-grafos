@@ -2,6 +2,7 @@
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 from queue import PriorityQueue
+import math
 
 infinity = 1.0e400
 
@@ -550,13 +551,16 @@ class FIFOQueue(Queue):
 
 
 class CustomPriorityQueue:
-    def __init__(self):
+    def __init__(self, problem = None):
         self.queue = PriorityQueue()
         self.counter = 0  # Para manejar elementos con prioridad igual
+        self.problem = problem
 
     def append(self, item):
-        cost = item.path_cost 
-        self.queue.put((cost, self.counter, item))
+        cost = item.path_cost
+        heuristic = self.problem.h(item) if self.problem else 0
+        priority = cost + heuristic
+        self.queue.put((priority, self.counter, item))
         self.counter += 1
 
     def pop(self):

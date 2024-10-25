@@ -136,6 +136,10 @@ def branch_and_bound_search(problem):
     return graph_search(problem, CustomPriorityQueue())
 
 
+def branch_and_bound_search_underestimation(problem):
+    return graph_search(problem, CustomPriorityQueue(problem))
+
+
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
 
