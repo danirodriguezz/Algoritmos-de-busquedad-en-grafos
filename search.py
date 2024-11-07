@@ -8,7 +8,7 @@ functions."""
 from utils import *
 import random
 import sys
-
+import time
 
 # ______________________________________________________________________________
 
@@ -101,18 +101,20 @@ def graph_search(problem, fringe):
     """Search through the successors of a problem to find a goal.
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
+    start = time.perf_counter()
     closed = {}
     fringe.append(Node(problem.initial))
     visited = 0
-    totalCost = 0
     generated = 1
     while fringe:
         node = fringe.pop()
         visited += 1
         if problem.goal_test(node.state):
+            end = time.perf_counter()
             print(f"Se han generado {generated} nodos")
             print(f"Se han visitado {visited} nodos")
             print(f"El coste total del camino es {node.path_cost}")
+            print(f"Tiempo de ejecución: {end - start:.6f} segundos")
             return node
         if node.state not in closed:
             closed[node.state] = True
